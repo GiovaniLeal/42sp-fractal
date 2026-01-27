@@ -22,7 +22,7 @@
 /* CONFIG --------------------------------------------------------------------*/
 # define WIN_WIDTH 800
 # define WIN_HEIGHT 600
-# define MAX_ITER 150
+# define MAX_ITER 200
 # define ESC 65307
 # define ORANGE_R 30
 # define ORANGE_G 3

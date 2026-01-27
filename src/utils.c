@@ -12,8 +12,9 @@
 
 #include "fractol.h"
 
+
 /* ************************************************************************** */
-/* 			  IS_FLOAT 		                  */
+/* 									  IS_FLOAT 		         			      */
 /* ************************************************************************** */
 int	is_float(const char *str)
 {
@@ -22,7 +23,7 @@ int	is_float(const char *str)
 
 	i = 0;
 	dot = 0;
-	if (!str || !*str)
+	if ((!str || !*str) && !ft_isdigit(str[i]))
 		return (0);
 	if (str[i] == '+' || str[i] == '-')
 		i++;
@@ -30,7 +31,7 @@ int	is_float(const char *str)
 	{
 		if (ft_isdigit(str[i]))
 			i++;
-		else if (str[i] == '.' && !dot && i > 0 && ft_isdigit(str[i - 1]))
+		else if (str[i] == '.' && !dot && i > 0 && ft_isdigit(str[i + 1]))
 		{
 			dot = 1;
 			i++;

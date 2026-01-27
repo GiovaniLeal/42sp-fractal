@@ -39,7 +39,7 @@ int	get_color(int iter)
 
 	if (iter == MAX_ITER)
 		return (0x000000);
-	x = fmod(((double)iter / MAX_ITER) * 2.5, 1.0);
+	x = fmod(((double)iter / MAX_ITER) * 3.5, 1.0);
 	red = 9 * (1 - x) * (x * x * x) * 255;
 	green = 15 * ((1 - x) * (1 - x)) * (x * x) * 255;
 	blue = 8.5 * ((1 - x) * (1 - x) * (1 - x)) * x * 255;
