@@ -14,41 +14,35 @@
 
 /* ************************************************************************** */
 /* 			  IS_FLOAT 		                  */
-/* funcao responsável por validar se a string passada represensa um numero 
-decimal,para que posteriormente seja convertida. No projeto tem a funcao de 
-validar as entradas						 */
 /* ************************************************************************** */
 int	is_float(const char *str)
 {
 	int	i;
-	int	has_digit;
-	int	has_dot;
+	int	dot;
 
 	i = 0;
-	has_digit = 0;
-	has_dot = 0;
-	if (!str || str[0] == '\0')
+	dot = 0;
+	if (!str || !*str)
 		return (0);
 	if (str[i] == '+' || str[i] == '-')
 		i++;
 	while (str[i])
 	{
-		if (str[i] >= '0' && str[i] <= '9')
-			has_digit = 1;
-		else if (str[i] == '.' && !has_dot)
-			has_dot = 1;
+		if (ft_isdigit(str[i]))
+			i++;
+		else if (str[i] == '.' && !dot && i > 0 && ft_isdigit(str[i - 1]))
+		{
+			dot = 1;
+			i++;
+		}
 		else
 			return (0);
-		i++;
 	}
-	return (has_digit);
+	return (1);
 }
 
-
 /* ************************************************************************** */
-/* 			  FT_ATOF		                  */
-/* Funçao responsável por converter a string recebida como parametro 
-	em numero decimal. */
+/* 			  FT_ATOF		                 	        */
 /* ************************************************************************** */
 double	ft_atof(const char *str)
 {
@@ -59,7 +53,7 @@ double	ft_atof(const char *str)
 	result = 0.0;
 	decimal = 1.0;
 	sign = 1;
-	if (*str == '+' || *str == '-')
+	if (*str == '-' || *str == '+')
 	{
 		if (*str == '-')
 			sign = -1;
@@ -69,14 +63,11 @@ double	ft_atof(const char *str)
 		result = result * 10.0 + (*str++ - '0');
 	if (*str == '.')
 	{
-		str++;
-		while (*str >= '0' && *str <= '9')
+		while (*++str >= '0' && *str <= '9')
 		{
 			decimal *= 0.1;
 			result += (*str - '0') * decimal;
-			str++;
 		}
 	}
 	return (result * sign);
 }
-

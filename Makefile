@@ -19,6 +19,13 @@ CC          := cc
 CFLAGS      := -Wall -Wextra -Werror
 
 # **************************************************************************** #
+#                                   DIRECTORIES                                #
+# **************************************************************************** #
+
+SRC_DIR     := src
+INC_DIR     := includes
+
+# **************************************************************************** #
 #                                   LIBFT                                      #
 # **************************************************************************** #
 
@@ -30,7 +37,7 @@ LIBFT       := $(LIBFT_DIR)/libft.a
 #                                   MLX                                        #
 # **************************************************************************** #
 
-MLX_DIR     := minilibx-linux
+MLX_DIR     := mlx
 MLX         := $(MLX_DIR)/libmlx.a
 MLX_LIBS    := -lXext -lX11 -lm
 
@@ -38,7 +45,7 @@ MLX_LIBS    := -lXext -lX11 -lm
 #                               INCLUDES / LIBS                                #
 # **************************************************************************** #
 
-INCLUDES    := -I$(LIBFT_INC) -I$(MLX_DIR) -I.
+INCLUDES    := -I$(INC_DIR) -I$(LIBFT_INC) -isystem $(MLX_DIR)
 LIBS        := $(LIBFT) $(MLX) $(MLX_LIBS)
 
 # **************************************************************************** #
@@ -52,7 +59,8 @@ SRC :=  main.c \
         hooks.c \
         utils.c
 
-OBJ := $(SRC:.c=.o)
+SRCS := $(addprefix $(SRC_DIR)/, $(SRC))
+OBJS := $(SRCS:.c=.o)
 
 # **************************************************************************** #
 #                                   RULES                                      #
@@ -60,14 +68,14 @@ OBJ := $(SRC:.c=.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(MLX) $(OBJ)
-	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(NAME)
 
 # **************************************************************************** #
 #                                   OBJECTS                                    #
 # **************************************************************************** #
 
-%.o: %.c
+$(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 # **************************************************************************** #
@@ -78,23 +86,24 @@ $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
 $(MLX):
-	$(MAKE) -C $(MLX_DIR)
+	@$(MAKE) -C $(MLX_DIR) all
 
 # **************************************************************************** #
 #                                   CLEAN                                      #
 # **************************************************************************** #
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJS)
 	$(MAKE) -C $(LIBFT_DIR) clean
-	$(MAKE) -C $(MLX_DIR) clean
-	@echo "\033[1;33m🧹 Objetos removidos.\033[0m"
+	@echo "\033[1;33m🧹 Objects removed.\033[0m"
 
 fclean: clean
 	rm -f $(NAME)
 	$(MAKE) -C $(LIBFT_DIR) fclean
-	@echo "\033[1;31m🗑️  Binário removido.\033[0m"
+	@echo "\033[1;31m🗑️  Binary removed.\033[0m"
 
 re: fclean all
 
 .PHONY: all clean fclean re
+
+

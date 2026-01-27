@@ -21,14 +21,12 @@ void	hooks_init(t_app *app)
 	mlx_key_hook(app->win, handle_keypress, app);
 	mlx_mouse_hook(app->win, handle_mouse, app);
 	mlx_expose_hook(app->win, handle_expose, app);
-	mlx_hook(app->win, 17, 0, clean_exit, app); /* DestroyNotify */
+	mlx_hook(app->win, 17, 0, clean_exit, app);
 }
 
 /* ************************************************************************** */
 /*                               KEYBOARD                                     */
 /* ************************************************************************** */
-/* ESC encerra o programa */
-
 int	handle_keypress(int keycode, t_app *app)
 {
 	if (keycode == ESC)
@@ -39,8 +37,6 @@ int	handle_keypress(int keycode, t_app *app)
 /* ************************************************************************** */
 /*                               EXPOSE                                       */
 /* ************************************************************************** */
-/* Redesenha a imagem quando a janela é exposta */
-
 int	handle_expose(t_app *app)
 {
 	if (!app || !app->view.img || !app->view.img->img)
@@ -51,15 +47,13 @@ int	handle_expose(t_app *app)
 		app->view.img->img,
 		0,
 		0
-	);
+		);
 	return (0);
 }
 
 /* ************************************************************************** */
 /*                               CLEAN EXIT                                   */
 /* ************************************************************************** */
-/* Libera corretamente os recursos e encerra o programa */
-
 int	clean_exit(t_app *app)
 {
 	if (!app)
@@ -74,15 +68,14 @@ int	clean_exit(t_app *app)
 		free(app->mlx);
 	}
 	if (app->fractal.julia_complex)
-        free(app->fractal.julia_complex);
+		free(app->fractal.julia_complex);
+	free(app->view.img);
 	exit(EXIT_SUCCESS);
 }
 
 /* ************************************************************************** */
 /*                               MOUSE                                        */
 /* ************************************************************************** */
-/* Scroll do mouse controla o zoom centrado no cursor */
-
 int	handle_mouse(int button, int x, int y, t_app *app)
 {
 	double	zoom_factor;
@@ -91,37 +84,18 @@ int	handle_mouse(int button, int x, int y, t_app *app)
 
 	if (button != 4 && button != 5)
 		return (0);
-
-	zoom_factor = (button == 4) ? 1.2 : 0.8;
-
-	mouse_re = (x - app->view.width / 2.0)
-		* (4.0 / app->view.width) / app->fractal.zoom
-		+ app->fractal.offset_x;
-
-	mouse_im = (y - app->view.height / 2.0)
-		* (4.0 / app->view.height) / app->fractal.zoom
-		+ app->fractal.offset_y;
-
+	if (button == 4)
+		zoom_factor = 1.2;
+	else
+		zoom_factor = 0.8;
+	mouse_re = calc_position(app, app->view.width, x) + app->fractal.offset_x;
+	mouse_im = -calc_position(app, app->view.height, y) + app->fractal.offset_y;
 	app->fractal.zoom *= zoom_factor;
-
 	app->fractal.offset_x = mouse_re
-		- (x - app->view.width / 2.0)
-		* (4.0 / app->view.width) / app->fractal.zoom;
-
+		- calc_position(app, app->view.width, x);
 	app->fractal.offset_y = mouse_im
-		- (y - app->view.height / 2.0)
-		* (4.0 / app->view.height) / app->fractal.zoom;
-
+		+ calc_position(app, app->view.height, y);
 	render_fractal(app);
-
-	mlx_put_image_to_window(
-		app->mlx,
-		app->win,
-		app->view.img->img,
-		0,
-		0
-	);
+	mlx_put_image_to_window(app->mlx, app->win, app->view.img->img, 0, 0);
 	return (0);
 }
-
-

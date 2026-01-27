@@ -14,7 +14,6 @@
 
 /* ************************************************************************** */
 /*  		              PRINT_USAGE	                            */
-/* 	Mensagem padrão de orientacao de uso ao usuário.		        */
 /* ************************************************************************** */
 void	print_usage(void)
 {
@@ -29,28 +28,25 @@ void	print_usage(void)
 		"+-------------------------------------------+\n"
 		"|             Julia Set Examples            |\n"
 		"|                                           |\n"
-		"| ./fractol julia -0.4 0.6       (Spider)   |\n"
-		"| ./fractol julia 0.285 0.01     (Spiral)   |\n"
-		"| ./fractol julia -0.835 -0.2321 (Rabbit)   |\n"
-		"| ./fractol julia -0.7269 0.1889 (Dragon)   |\n"
-		"| ./fractol julia -0.8 0.156     (Dendrite) |\n"
+		"| ./fractol julia -0.4 0.6                  |\n"
+		"| ./fractol julia 0.285 0.01                |\n"
+		"| ./fractol julia -0.8 0.156                |\n"
 		"+-------------------------------------------+\n"
 		);
 }
 
 /* ************************************************************************** */
 /*  		              PARSE_ARGS	                            */
-/* 	Valida input do usuário e define typo do fractal inserido.          */
 /* ************************************************************************** */
 int	parse_args(int ac, char **av, t_fractal *fractal)
 {
-	if (ac == 2 && !ft_strncmp(av[1], "mandelbrot", 10))
+	if (ac == 2 && !ft_strncmp(av[1], "mandelbrot", 11))
 	{
 		fractal->type = MANDELBROT;
 		fractal->julia_complex = NULL;
 		return (1);
 	}
-	if (ac == 4 && !ft_strncmp(av[1], "julia", 5))
+	if (ac == 4 && !ft_strncmp(av[1], "julia", 6))
 	{
 		if (!is_float(av[2]) || !is_float(av[3]))
 			return (0);
@@ -64,7 +60,6 @@ int	parse_args(int ac, char **av, t_fractal *fractal)
 	}
 	return (0);
 }
-
 
 /* ************************************************************************** */
 /*  		               MAIN 	                            */
@@ -86,4 +81,3 @@ int	main(int ac, char **av)
 	mlx_loop(app.mlx);
 	return (0);
 }
-

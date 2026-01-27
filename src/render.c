@@ -13,8 +13,7 @@
 #include "fractol.h"
 
 /* ************************************************************************** */
-/*  		               PUT_PIXEL                          				  */
-/* 	Escreve a cor de um pixel diretamente na memoria da imagem			      */
+/*  		               PUT_PIXEL                                  */
 /* ************************************************************************** */
 void	put_pixel(t_img *img, int x, int y, int color)
 {
@@ -27,40 +26,45 @@ void	put_pixel(t_img *img, int x, int y, int color)
 }
 
 /* ************************************************************************** */
-/*  		                GET_COLOR                   				      */
-/* Seta as cores de renderizaçao de acordo com o numero de interacoes         */
+/*  		                GET_COLOR                                 */
 /* ************************************************************************** */
 
 int	get_color(int iter)
 {
+	double	x;
 	double	t;
-	int		r;
-	int		g;
-	int		b;
+	int		red;
+	int		green;
+	int		blue;
 
 	if (iter == MAX_ITER)
 		return (0x000000);
-	t = (double)iter / MAX_ITER;
-	r = (int)(sin(6.28318 * t + 4) * 127 + 128);
-	g = (int)(sin(6.28318 * t + 2) * 127 + 128);
-	b = (int)(sin(6.28318 * t + 1) * 127 + 128);
-	return ((r << 16) | (g << 8) | b);
+	x = fmod(((double)iter / MAX_ITER) * 2.5, 1.0);
+	red = 9 * (1 - x) * (x * x * x) * 255;
+	green = 15 * ((1 - x) * (1 - x)) * (x * x) * 255;
+	blue = 8.5 * ((1 - x) * (1 - x) * (1 - x)) * x * 255;
+	if (iter < MAX_ITER * 0.15)
+	{
+		t = (double)iter / (MAX_ITER * 0.15);
+		red = (1 - t) * ORANGE_R + t * red;
+		green = (1 - t) * ORANGE_G + t * green;
+		blue = (1 - t) * ORANGE_B + t * blue;
+	}
+	return ((red << 16) | (green << 8) | blue);
 }
 
 /* ************************************************************************** */
-/*  		                CALC_POSITION	                   				  */
-/* calcula a posicao relativa centralizada								      */
+/*  		                CALC_POSITION	                            */
 /* ************************************************************************** */
-
 double	calc_position(t_app *app, int max_position, int init_position)
 {
-	return ((init_position - max_position / 2.0) * (4.0 / app->view.width)
+	return ((init_position - max_position / 2.0)
+		* (4.0 / max_position)
 		/ app->fractal.zoom);
 }
 
 /* ************************************************************************** */
-/*  		                    RENDER_FRACTAL 	                   			  */
-/*             Escreve diretamente na memória da imagem 				      */
+/*  		                    RENDER_FRACTAL 	                  */
 /* ************************************************************************** */
 void	render_fractal(t_app *app)
 {
@@ -78,12 +82,12 @@ void	render_fractal(t_app *app)
 		{
 			real_nb = calc_position(app, app->view.width, width)
 				+ app->fractal.offset_x;
-			img_nb = calc_position(app, app->view.height, height)
+			img_nb = -calc_position(app, app->view.height, height)
 				+ app->fractal.offset_y;
 			if (app->fractal.type == MANDELBROT)
 				iter = mandelbrot(real_nb, img_nb);
 			else
-				iter = julia(real_nb, img_nb, app->fractal.julia_complex);
+				iter = julia(real_nb, img_nb, &app->fractal);
 			put_pixel(app->view.img, width, height, get_color(iter));
 			width++;
 		}
@@ -92,8 +96,7 @@ void	render_fractal(t_app *app)
 }
 
 /* ************************************************************************** */
-/*  		                        RENDER 	                                  */
-/* Chama funcoes responsáveis por iniciar a imagem e renderiza-la na janela   */
+/*  		              RENDER           	                  */
 /* ************************************************************************** */
 void	render(t_app *app)
 {

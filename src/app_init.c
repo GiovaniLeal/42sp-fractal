@@ -35,20 +35,17 @@ void	image_init(t_app *app)
 	if (!app->view.img)
 		clean_exit(app);
 	app->view.img->img = mlx_new_image(
-		app->mlx,
-		app->view.width,
-		app->view.height
-	);
+			app->mlx,
+			app->view.width,
+			app->view.height);
 	if (!app->view.img->img)
 		clean_exit(app);
 	app->view.img->addr = mlx_get_data_addr(
-		app->view.img->img,
-		&app->view.img->bits_per_pixel,
-		&app->view.img->line_len,
-		&app->view.img->endian
-	);
+			app->view.img->img,
+			&app->view.img->bits_per_pixel,
+			&app->view.img->line_len,
+			&app->view.img->endian);
 }
-
 
 /* ************************************************************************** */
 /* 		 	  FRACTAL_INIT	                            */
@@ -70,19 +67,16 @@ int	app_init(t_app *app)
 	app->mlx = mlx_init();
 	if (!app->mlx)
 		return (0);
-
 	app->view.width = WIN_WIDTH;
 	app->view.height = WIN_HEIGHT;
 	app->win = mlx_new_window(
-		app->mlx,
-		app->view.width,
-		app->view.height,
-		fractal_name(app->fractal.type)
-	);
+			app->mlx,
+			app->view.width,
+			app->view.height,
+			fractal_name(app->fractal.type));
 	if (!app->win)
 		clean_exit(app);
 	image_init(app);
 	fractal_init(&app->fractal);
 	return (1);
 }
-
