@@ -4,7 +4,7 @@ currículo da 42 por giodos-s.*
 ## Descricao
 Esse e o primeiro projeto grafico dentro do curriculum da 42. 
 
-Utilizamos a API da minilibx para criar uma interface grafica em que podemos vizualizar os fractais de Julia e Mandelbrot. 
+Utilizamos a API da [Minilibx](https://harm-smits.github.io/42docs/libs/minilibx) para criar uma interface grafica em que podemos vizualizar os fractais de Julia e Mandelbrot. 
 
 Fractais sao funcoes matematicas que operam dentro do campo complexo e tendem ao infinito. Iterando cada pixel da janela no campo complexo, podemos vizualizar claramente as lindas formas que sao geradas atraves das iteracoes. 
 
@@ -29,7 +29,7 @@ Exemplos de uso
 `./fractol Mandelbrot`
 `./fractol Julia -0.4 0.6`
 
-Uma mensagem detalhadas de como rodar o projeto é fornecida ao usuário em caso de erro.
+*Uma mensagem detalhadas de como rodar o projeto é fornecida ao usuário em caso de erro.*
 
 ## 📚 Recursos
 
