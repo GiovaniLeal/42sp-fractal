@@ -23,7 +23,7 @@ char	*ft_strdup(const char *s)
 	s_len = ft_strlen(s);
 	copy_s = malloc(s_len + 1);
 	if (!copy_s)
-		return (NULL);		
+		return (NULL);
 	ft_memcpy(copy_s, s, s_len + 1);
 	return (copy_s);
 }

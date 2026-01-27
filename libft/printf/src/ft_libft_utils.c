@@ -50,20 +50,3 @@ char	*ft_put_str_generic(const char *str, int do_alloc)
 	buffer[len] = '\0';
 	return (buffer);
 }
-
-// /* ************************************************************************** */
-// /* STRING DUPLICATE - ALLOCATES NEW COPY OF STRING                            */
-// /* ************************************************************************** */
-// char	*ft_strdup(const char *str)
-// {
-// 	size_t	len;
-// 	char	*buffer;
-
-// 	len = ft_strlen(str);
-// 	buffer = malloc(len + 1);
-// 	if (!buffer)
-// 		return (NULL);
-// 	ft_memcpy(buffer, str, len);
-// 	buffer[len] = '\0';
-// 	return (buffer);
-// }

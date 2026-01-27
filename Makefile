@@ -16,7 +16,7 @@
 
 NAME        := fractol
 CC          := cc
-CFLAGS      := -Wall -Wextra -Werror
+CFLAGS      := -Wall -Wextra -Werror -O3
 
 # **************************************************************************** #
 #                                   DIRECTORIES                                #
