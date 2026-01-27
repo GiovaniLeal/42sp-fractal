@@ -37,4 +37,4 @@ Uma mensagem detalhadas de como rodar o projeto é fornecida ao usuário em caso
     [Youtube Video Numberpile](https://www.youtube.com/watch?v=Yz06NW6DwsE&themeRefresh=1)
 
 * Uso da IA
-    Para esse projeto o uso da IA foi usada estritamente para entendimento das funçoes matematicas complexas dos fractais e no auxilio da transiçoes de cores para melhor vizualizaçao dos detalhes dos fractais.
+  - Para esse projeto o uso da IA foi usada estritamente para entendimento das funçoes matematicas complexas dos fractais e no auxilio da transiçoes de cores para melhor vizualizaçao dos detalhes dos fractais.
