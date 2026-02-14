@@ -8,6 +8,8 @@ Utilizamos a API da [Minilibx](https://harm-smits.github.io/42docs/libs/minilibx
 
 Fractais sao funcoes matematicas que operam dentro do campo complexo e tendem ao infinito. Iterando cada pixel da janela no campo complexo, podemos vizualizar claramente as lindas formas que sao geradas atraves das iteracoes. 
 
+![mandelbrot](https://github.com/user-attachments/assets/6bfe4abc-c273-45f3-b120-fc96c4229344)
+![julia_1](https://github.com/user-attachments/assets/e228255c-7942-469a-9e72-37f3c96ad217)
 
 ## Instruçoes
 
